@@ -1,0 +1,22 @@
+# Ignore models and large ML files
+models/
+*.pkl
+*.joblib
+*.h5
+*.bin
+
+# Virtual environments
+venv/
+.venv/
+
+# Ignore cache and system files
+__pycache__/
+.DS_Store
+*.pyc
+
+# Ignore secrets
+.env
+
+# Ignore IDE settings
+.vscode/
+.idea/

@@ -1,0 +1,12 @@
+streamlit
+pandas
+numpy
+sqlalchemy
+mysql-connector-python
+scikit-learn
+xgboost
+category-encoders
+matplotlib
+plotly
+shap
+joblib
