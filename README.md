@@ -6,7 +6,7 @@ Full-stack analytics platform with MySQL, Streamlit, and ML prediction for video
 
 ### 1. Clone & Install
 ```bash
-git clone <your-repo>
+git clone (https://github.com/Khorawee/Game-Sales-Intelligence-Dashboard.git)
 cd game-sales-dashboard
 pip install -r requirements.txt
 ```
