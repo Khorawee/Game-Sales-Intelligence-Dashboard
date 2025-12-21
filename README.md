@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🎮 Game Sales Analytics & Prediction Dashboard
 
 โปรเจกต์นี้คือระบบวิเคราะห์และพยากรณ์ยอดขายวิดีโอเกม (Video Game Sales) แบบครบวงจร ตั้งแต่การจัดเก็บข้อมูลลงฐานข้อมูล MySQL, การวิเคราะห์ข้อมูล (Data Analytics), การสร้างโมเดล Machine Learning เพื่อทำนายยอดขาย และการแสดงผลผ่าน Web Application ด้วย Streamlit
