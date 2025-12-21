@@ -5,17 +5,17 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-# โหลดค่าจาก .env
+# Load variables from .env
 load_dotenv()
 
-# สร้าง connection string จาก environment variables
+# Create connection string from environment variables
 DB_USER = os.getenv("DB_USER", "root")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_NAME = os.getenv("DB_NAME", "game_sales")
 
 if not DB_PASSWORD:
-    raise ValueError("❌ กรุณาตั้งค่า DB_PASSWORD ในไฟล์ .env")
+    raise ValueError("Please set DB_PASSWORD in the .env file")
 
 engine = create_engine(f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}")
 
@@ -32,41 +32,37 @@ def insert_unique(table, values):
 
 def main():
     try:
-        print("📥 กำลังโหลด CSV...")
+        print("Loading CSV...")
         
-        # ใช้เส้นทางแบบสัมพัทธ์ (relative path)
+        # Use relative path
         csv_path = Path(__file__).parent / "data" / "vgsales.csv"
         
-        # ตรวจสอบว่าไฟล์มีอยู่จริง
+        # Check if file exists
         if not csv_path.exists():
-            raise FileNotFoundError(f"❌ ไม่พบไฟล์ CSV ที่: {csv_path}")
+            raise FileNotFoundError(f"CSV file not found at: {csv_path}")
         
         df = pd.read_csv(csv_path)
-        print(f"✔ โหลดข้อมูลสำเร็จ: {len(df):,} แถว")
+        print(f"Data loaded successfully: {len(df):,} rows")
 
-        print("\n🧹 ทำความสะอาดข้อมูล...")
+        print("\nCleaning data...")
         df = df.dropna(subset=["Name", "Platform", "Genre", "Publisher"])
         df["Year"] = df["Year"].fillna(0).astype(int)
-        print(f"✔ ข้อมูลหลังทำความสะอาด: {len(df):,} แถว")
+        print(f"Data after cleaning: {len(df):,} rows")
 
-        # =====================================================
         # INSERT UNIQUE DIMENSION VALUES (SAFE)
-        # =====================================================
-        print("\n📦 กำลังเพิ่มข้อมูล Platform/Genre/Publisher...")
+        print("\nInserting Platform/Genre/Publisher data...")
 
         insert_unique("platform", df["Platform"].unique())
-        print(f"  ✔ Platform: {df['Platform'].nunique()} รายการ")
+        print(f"  Platform: {df['Platform'].nunique()} items")
         
         insert_unique("genre", df["Genre"].unique())
-        print(f"  ✔ Genre: {df['Genre'].nunique()} รายการ")
+        print(f"  Genre: {df['Genre'].nunique()} items")
         
         insert_unique("publisher", df["Publisher"].unique())
-        print(f"  ✔ Publisher: {df['Publisher'].nunique()} รายการ")
+        print(f"  Publisher: {df['Publisher'].nunique()} items")
 
-        # =====================================================
         # LOAD ID MAPPING
-        # =====================================================
-        print("\n🔗 กำลังโหลด ID mapping...")
+        print("\nLoading ID mapping...")
 
         plat_map = pd.read_sql("SELECT id, name FROM platform", engine).set_index("name")["id"]
         genre_map = pd.read_sql("SELECT id, name FROM genre", engine).set_index("name")["id"]
@@ -77,17 +73,15 @@ def main():
         df["genre_id"] = df["Genre"].map(genre_map)
         df["publisher_id"] = df["Publisher"].map(pub_map)
         
-        # ตรวจสอบว่ามีค่า NULL หรือไม่
+        # Check for NULL values
         null_count = df[["platform_id", "genre_id", "publisher_id"]].isnull().sum().sum()
         if null_count > 0:
-            print(f"⚠️ พบข้อมูลที่ map ไม่ได้: {null_count} แถว")
+            print(f"Unmapped data found: {null_count} rows")
             df = df.dropna(subset=["platform_id", "genre_id", "publisher_id"])
-            print(f"✔ ลบข้อมูลที่ไม่สมบูรณ์แล้ว เหลือ: {len(df):,} แถว")
+            print(f"Incomplete data removed, remaining: {len(df):,} rows")
 
-        # =====================================================
         # INSERT INTO VGSALES (FACT TABLE)
-        # =====================================================
-        print("\n🗃 กำลังเพิ่มข้อมูลลงตาราง vgsales...")
+        print("\nInserting data into vgsales table...")
 
         inserted_count = 0
         with engine.begin() as conn:
@@ -117,39 +111,37 @@ def main():
                     })
                     inserted_count += 1
                     
-                    # แสดงความคืบหน้า
                     if (idx + 1) % 1000 == 0:
-                        print(f"  ... ประมวลผลแล้ว {idx + 1:,}/{len(df):,} แถว")
+                        print(f"  ... Processed {idx + 1:,}/{len(df):,} rows")
                         
                 except Exception as e:
-                    print(f"⚠️ ข้อผิดพลาดที่แถว {idx}: {e}")
+                    print(f"Error at row {idx}: {e}")
                     continue
 
-        print(f"\n✔ เพิ่มข้อมูลสำเร็จ: {inserted_count:,} แถว")
-        print("\n🎉 เสร็จสิ้นการเตรียมฐานข้อมูล!")
+        print(f"\nData inserted successfully: {inserted_count:,} rows")
+        print("\nDatabase preparation completed!")
         
-        # แสดงสถิติข้อมูล
-        print("\n📊 สถิติข้อมูลในฐานข้อมูล:")
+        print("\nDatabase Statistics:")
         with engine.connect() as conn:
             result = conn.execute(text("SELECT COUNT(*) as count FROM vgsales")).fetchone()
-            print(f"  • จำนวนเกมทั้งหมด: {result[0]:,} เกม")
+            print(f"  - Total Games: {result[0]:,} games")
             
             result = conn.execute(text("SELECT COUNT(*) as count FROM platform")).fetchone()
-            print(f"  • จำนวน Platform: {result[0]} แพลตฟอร์ม")
+            print(f"  - Total Platforms: {result[0]} platforms")
             
             result = conn.execute(text("SELECT COUNT(*) as count FROM genre")).fetchone()
-            print(f"  • จำนวน Genre: {result[0]} ประเภท")
+            print(f"  - Total Genres: {result[0]} types")
             
             result = conn.execute(text("SELECT COUNT(*) as count FROM publisher")).fetchone()
-            print(f"  • จำนวน Publisher: {result[0]} ผู้เผยแพร่")
+            print(f"  - Total Publishers: {result[0]} publishers")
 
     except FileNotFoundError as e:
-        print(f"\n❌ ข้อผิดพลาด: {e}")
-        print("💡 กรุณาตรวจสอบว่าไฟล์ vgsales.csv อยู่ในโฟลเดอร์ 'data'")
+        print(f"\nError: {e}")
+        print("Please check if vgsales.csv exists in the 'data' folder")
     except ValueError as e:
-        print(f"\n❌ ข้อผิดพลาดการตั้งค่า: {e}")
+        print(f"\nConfiguration Error: {e}")
     except Exception as e:
-        print(f"\n❌ เกิดข้อผิดพลาดที่ไม่คาดคิด: {e}")
+        print(f"\nUnexpected Error: {e}")
         raise
 
 

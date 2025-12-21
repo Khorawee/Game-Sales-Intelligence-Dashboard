@@ -9,7 +9,7 @@ try:
     )
 
     if conn.is_connected():
-        print("✅ Connected to MySQL database successfully!")
+        print(" Connected to MySQL database successfully!")
         print("Database:", conn.database)
 
 except mysql.connector.Error as e:
