@@ -100,22 +100,14 @@ Plaintext
 │   └── vgsales.csv         # ไฟล์ข้อมูลดิบ
 └── models/                 # โฟลเดอร์เก็บโมเดลที่เทรนเสร็จแล้ว (.pkl)
 
-หน้าจอการใช้งาน (Screenshots)
+## Screenshots
 
-Dashboard Overview
+### Dashboard Overview
+![Dashboard Overview 1](image/Screenshot%202025-12-22%20205556.png)
+![Dashboard Overview 2](image/Screenshot%202025-12-22%20205604.png)
+![Dashboard Overview 3](image/Screenshot%202025-12-22%20205612.png)
+![Dashboard Overview 4](image/Screenshot%202025-12-22%20205625.png)
+![Dashboard Overview 5](image/Screenshot%202025-12-22%20205632.png)
 
-(Screenshot 2025-12-22 205556.png)
-
-(Screenshot 2025-12-22 205604.png)
-
-(Screenshot 2025-12-22 205612.png)
-
-(Screenshot 2025-12-22 205625.png)
-
-(Screenshot 2025-12-22 205632.png)
-
-
-
-ML Prediction Interface
-
-(Screenshot 2025-12-22 205643.png)
+### ML Prediction Interface
+![ML Prediction Interface](image/Screenshot%202025-12-22%20205643.png)
