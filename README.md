@@ -103,11 +103,17 @@ Plaintext
 ## Screenshots
 
 ### Dashboard Overview
+
 ![Dashboard Overview 1](image/Screenshot%202025-12-22%20205556.png)
+
 ![Dashboard Overview 2](image/Screenshot%202025-12-22%20205604.png)
+
 ![Dashboard Overview 3](image/Screenshot%202025-12-22%20205612.png)
+
 ![Dashboard Overview 4](image/Screenshot%202025-12-22%20205625.png)
+
 ![Dashboard Overview 5](image/Screenshot%202025-12-22%20205632.png)
 
 ### ML Prediction Interface
+
 ![ML Prediction Interface](image/Screenshot%202025-12-22%20205643.png)
