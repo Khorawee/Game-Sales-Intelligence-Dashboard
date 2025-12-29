@@ -99,3 +99,23 @@ Plaintext
 ├── data/
 │   └── vgsales.csv         # ไฟล์ข้อมูลดิบ
 └── models/                 # โฟลเดอร์เก็บโมเดลที่เทรนเสร็จแล้ว (.pkl)
+
+หน้าจอการใช้งาน (Screenshots)
+
+Dashboard Overview
+
+(Screenshot 2025-12-22 205556.png)
+
+(Screenshot 2025-12-22 205604.png)
+
+(Screenshot 2025-12-22 205612.png)
+
+(Screenshot 2025-12-22 205625.png)
+
+(Screenshot 2025-12-22 205632.png)
+
+
+
+ML Prediction Interface
+
+(Screenshot 2025-12-22 205643.png)
