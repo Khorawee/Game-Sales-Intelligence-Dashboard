@@ -102,6 +102,8 @@ Plaintext
 
 ## Screenshots
 
+## Screenshots
+
 ### Dashboard Overview
 ![Dashboard Overview 1](./image/Screenshot%202025-12-22%20205556.png)
 ![Dashboard Overview 2](./image/Screenshot%202025-12-22%20205604.png)
@@ -111,3 +113,4 @@ Plaintext
 
 ### ML Prediction Interface
 ![ML Prediction Interface](./image/Screenshot%202025-12-22%20205643.png)
+
