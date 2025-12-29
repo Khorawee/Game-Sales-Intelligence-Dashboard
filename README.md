@@ -55,8 +55,6 @@ mysql -u root -p < game_sales_schema.sql
 4. Environment Variables
 สร้างไฟล์ .env ในโฟลเดอร์หลักของโปรเจกต์ และใส่ข้อมูลการเชื่อมต่อฐานข้อมูล:
 
-Ini, TOML
-
 # .env file
 DB_USER=root
 DB_PASSWORD=your_password
