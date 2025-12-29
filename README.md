@@ -6,7 +6,6 @@
 ![Streamlit](https://img.shields.io/badge/Streamlit-App-red)
 ![MySQL](https://img.shields.io/badge/MySQL-Database-orange)
 ![Scikit-Learn](https://img.shields.io/badge/ML-Scikit--Learn-yellow)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 ## Features
 
